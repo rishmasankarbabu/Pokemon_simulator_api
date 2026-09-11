@@ -1,6 +1,11 @@
+import { MongoClient } from 'mongodb';
 import request from 'supertest';
 import { describe, expect, it } from 'vitest';
-import { app } from '../src/server';
+import { createApp } from '../src/app';
+import { PokemonRepository } from '../src/data/pokemonRepository';
+
+const repository = new PokemonRepository(new MongoClient('mongodb://localhost:27017'), 'pokemon_battle');
+const app = createApp(repository);
 
 describe('API validation', () => {
   it('applies security headers without exposing the framework', async () => {

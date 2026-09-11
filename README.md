@@ -34,7 +34,8 @@ The project also includes supporting functionality for loading the dataset, look
 
 ```text
 src/
-  server.ts                    Express application and API routes
+  app.ts                       Express application, middleware, and API routes
+  server.ts                    MongoDB connection and server startup
   data/pokemonRepository.ts    MongoDB access and Pokemon queries
   domain/battleEngine.ts       Battle calculations and battle log creation
   domain/types.ts              TypeScript data contracts
@@ -144,8 +145,6 @@ Request:
 ```
 
 The response contains `winner`, `loser`, `score`, `rounds`, and `log`. Each log entry records the round, attacker, defender, damage, effectiveness, remaining health, and a readable message.
-
-This endpoint must be called with `POST`. A `GET /api/battles` request returns `404` because there is no GET battle route.
 
 ### `GET /api/pokemon`
 
@@ -264,12 +263,14 @@ The battle response contains the winning team, losing team, score, number of rou
 
 If I had more time, I would add the following functionality:
 
+- Modularize the project structure by separating controllers, services, repositories, validation, and configuration as the application grows.
 - Support configurable battle rules, such as speed, critical hits, status effects, and special abilities.
 - Add battle history so completed battles can be stored and retrieved later.
 - Add user-created teams and team validation before starting a battle.
 - Add request validation with clearer error messages for empty or duplicate teams.
 - Add integration tests for the API, MongoDB repository, and Postman request scenarios.
 - Add API documentation with an OpenAPI or Swagger specification.
+
 
 ## Checks
 
