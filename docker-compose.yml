@@ -1,0 +1,31 @@
+services:
+  mongodb:
+    image: mongo:8
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  api:
+    build: .
+    depends_on:
+      - mongodb
+    environment:
+      PORT: 3000
+      MONGODB_URI: mongodb://mongodb:27017
+      MONGODB_DB: pokemon_battle
+    ports:
+      - "3000:3000"
+
+  seed:
+    build: .
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017
+      MONGODB_DB: pokemon_battle
+    command: ["node", "dist/scripts/seed.js"]
+
+volumes:
+  mongo-data:
